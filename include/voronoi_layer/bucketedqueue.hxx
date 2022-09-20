@@ -1,8 +1,9 @@
-#include "voronoi_layer/bucketedqueue.h"
-
-#include "limits.h"
 #include <stdio.h>
 #include <stdlib.h>
+
+#include "limits.h"
+
+#include "voronoi_layer/bucketedqueue.h"
 
 template <class T>
 BucketPrioQueue<T>::BucketPrioQueue() {
@@ -11,20 +12,20 @@ BucketPrioQueue<T>::BucketPrioQueue() {
 
 template <class T>
 bool BucketPrioQueue<T>::empty() {
-  return (count==0);
+  return (count == 0);
 }
-
 
 template <class T>
 void BucketPrioQueue<T>::push(int prio, T t) {
   buckets[prio].push(t);
-  if (nextPop == buckets.end() || prio < nextPop->first) nextPop = buckets.find(prio);
+  if (nextPop == buckets.end() || prio < nextPop->first)
+    nextPop = buckets.find(prio);
   count++;
 }
 
 template <class T>
 T BucketPrioQueue<T>::pop() {
-  while (nextPop!=buckets.end() && nextPop->second.empty()) ++nextPop;
+  while (nextPop != buckets.end() && nextPop->second.empty()) ++nextPop;
 
   T p = nextPop->second.front();
   nextPop->second.pop();
@@ -36,4 +37,3 @@ T BucketPrioQueue<T>::pop() {
   count--;
   return p;
 }
-
